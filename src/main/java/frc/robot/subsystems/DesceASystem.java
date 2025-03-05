@@ -30,10 +30,9 @@ public class DesceASystem extends SubsystemBase {
       DesceAMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   }
 
-
   @Override
   public void periodic() {
-    if(currentState == DesceAState.DESCE || currentState == DesceAState.REDESCE ){
+    if(currentState == DesceAState.DESCE ||/*operador "OU" ||*/ currentState == DesceAState.REDESCE ){
         DesceAMotor.set(currentState.speed);
     } else{
         DesceAMotor.set(0);

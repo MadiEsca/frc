@@ -26,10 +26,8 @@ public class RobotContainer {
   CommandXboxController joystick2 = new CommandXboxController(1);
   
   public RobotContainer() {
-    
     configureBindings();
     defaultcommands();
-
   }
 
   private void configureBindings() {
