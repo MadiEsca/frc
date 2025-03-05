@@ -28,7 +28,7 @@ public class DesceASystem extends SubsystemBase {
       .idleMode(IdleMode.kBrake);
   
       DesceAMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-  }
+  } 
 
   @Override
   public void periodic() {

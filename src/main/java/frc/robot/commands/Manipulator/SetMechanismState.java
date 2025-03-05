@@ -70,5 +70,5 @@ public class SetMechanismState extends InstantCommand {
     }else if(currentPosition){
       RobotContainer.DesceASystem.SetCurrentPosition(this.currentAlgaPosition);
     }
-  }
+  } 
 }

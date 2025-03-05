@@ -27,7 +27,7 @@ public class DriveWithJoystick extends Command {
    {
     drive = 0;
     turn = 0;
-  }
+  } 
 
   @Override
   public void execute() {

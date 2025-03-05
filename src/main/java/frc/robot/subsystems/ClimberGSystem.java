@@ -50,7 +50,7 @@ public class ClimberGSystem extends SubsystemBase {
     //  ClimberGMotor.set(currentState.speed);
     //} else{
     //  ClimberGMotor.set(ClimberGState.STOPPED.speed);
-    //}
+    //} 
   }
   
   public void SetCurrentState(ClimberGState state){

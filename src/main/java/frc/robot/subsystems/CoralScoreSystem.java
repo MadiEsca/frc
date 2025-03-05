@@ -25,7 +25,7 @@ public class CoralScoreSystem extends SubsystemBase {
   
     coralMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-  }
+  } 
 
   @Override
   public void periodic() {

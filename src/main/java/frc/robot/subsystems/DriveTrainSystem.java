@@ -74,5 +74,5 @@ public class DriveTrainSystem extends SubsystemBase {
 
   public void SetCurrentState(DriveTrainState state){
     this.currentState = state;
-  }
+  } 
 }
