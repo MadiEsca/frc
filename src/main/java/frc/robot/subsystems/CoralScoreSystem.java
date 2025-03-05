@@ -21,9 +21,7 @@ public class CoralScoreSystem extends SubsystemBase {
   public CoralState currentState = CoralState.STOPPED;
 
   public CoralScoreSystem() {
-    configSparkMotor
-      .inverted(true)
-      .idleMode(IdleMode.kBrake);
+    configSparkMotor.inverted(true).idleMode(IdleMode.kBrake);
   
     coralMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
@@ -40,5 +38,9 @@ public class CoralScoreSystem extends SubsystemBase {
 
   public void SetCurrentState(CoralState state){
     this.currentState = state;
+  }
+
+  public double EncoderCoral(){
+    return coralMotor.getEncoder().getPosition();
   }
 }

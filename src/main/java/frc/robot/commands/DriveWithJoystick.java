@@ -1,7 +1,9 @@
 package frc.robot.commands;
 
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrainSystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 
@@ -33,6 +35,9 @@ public class DriveWithJoystick extends Command {
     turn = joystick1.getRawAxis(Constants.ControlsJoystick.rightMotors) * driveTrainSystem.currentState.velocity;
 
     driveTrainSystem.arcadeMode(drive, turn);
+
+    RobotContainer.ClimberGSystem.EncoderClimber();
+    SmartDashboard.putNumber("EncoderClimber", RobotContainer.ClimberGSystem.EncoderClimber());
   }
 
   @Override

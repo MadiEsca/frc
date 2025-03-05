@@ -28,7 +28,6 @@ public class RobotContainer {
   public RobotContainer() {
     
     configureBindings();
-
     defaultcommands();
 
   }
@@ -50,6 +49,5 @@ public class RobotContainer {
 
   private void defaultcommands(){
     driveTrainSystem.setDefaultCommand(new DriveWithJoystick(driveTrainSystem, joystick1));
-    
   }
 }

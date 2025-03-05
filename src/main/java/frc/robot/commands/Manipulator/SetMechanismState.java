@@ -3,6 +3,7 @@ package frc.robot.commands.Manipulator;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 
 import frc.robot.RobotContainer;
+import frc.robot.Constants.AlgaPosition;
 import frc.robot.Constants.ClimberGState;
 import frc.robot.Constants.CoralState;
 import frc.robot.Constants.DriveTrainConstants;
@@ -18,11 +19,19 @@ public class SetMechanismState extends InstantCommand {
       private DriveTrainState currentStateDriveTrain = DriveTrainState.STOPPED;
       private ClimberGState currentStateClimberG = ClimberGState.STOPPED;
       private DesceAState currentStateDesceA = DesceAState.STOPPED;
+      private AlgaPosition currentAlgaPosition = AlgaPosition.REPOUSO;
 
     boolean currentStateCoralOnly = false;
     boolean currentStateDriveTrainOnly = false;
     boolean currentStateClimberGOnly = false;
     boolean currentStateDesceAOnly = false;
+    boolean currentPosition = false;
+
+    public SetMechanismState(AlgaPosition altura) {
+      this.currentAlgaPosition = altura;
+      addRequirements(RobotContainer.DesceASystem);
+      currentPosition = true;
+    }
 
     public SetMechanismState(CoralState state) {
       this.currentStateCoral = state;
@@ -58,6 +67,8 @@ public class SetMechanismState extends InstantCommand {
       RobotContainer.ClimberGSystem.SetCurrentState(this.currentStateClimberG);
     }else if(currentStateDesceAOnly){
       RobotContainer.DesceASystem.SetCurrentState(this.currentStateDesceA);
+    }else if(currentPosition){
+      RobotContainer.DesceASystem.SetCurrentPosition(this.currentAlgaPosition);
     }
   }
 }
