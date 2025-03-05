@@ -13,20 +13,23 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ClimberGState;
 
+//Classe que define o subsistema do climber
+//Essa classe herda os 
 public class ClimberGSystem extends SubsystemBase {
+  //Instanciando o Objeto SparkMax -> Nomeando a intância como ClimberGMotor -> Passando os parâmetros do objeto para a nova instância
   public SparkMax ClimberGMotor = new SparkMax(Constants.ClimberGConstants.ClimberMotorsID, MotorType.kBrushless);
  
   SparkMaxConfig configSparkMotor = new SparkMaxConfig();
 
   public ClimberGState currentState = ClimberGState.STOPPED;
 
+  //Método construtor, configurando o motor
   public ClimberGSystem() {
     configSparkMotor
       .inverted(true)
       .idleMode(IdleMode.kBrake);
   
     ClimberGMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-
   }
 
   @Override
@@ -37,7 +40,6 @@ public class ClimberGSystem extends SubsystemBase {
       ClimberGMotor.set(0);
     }
   }
-
   public void SetCurrentState(ClimberGState state){
     this.currentState = state;
   }

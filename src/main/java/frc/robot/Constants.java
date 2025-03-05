@@ -1,6 +1,12 @@
 package frc.robot;
 
+//Classes onde armazenamos os valores constantes que serão utilizados ao longo do código.
+
+//Superclasse:
+//Final é utilizado tornar os valores abaixo inalteráveis por outras partes do código
 public final class Constants {
+  //Subclasses:
+  //Static é utilizado para mostrar que esses valores são estáticos
   public static class DriveTrainConstants {
     public static int rightFrontMotorID = 13;
     public static int rightBackMotorID = 3;
