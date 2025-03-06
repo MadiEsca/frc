@@ -17,31 +17,31 @@ import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.ClimberGState;
+import frc.robot.Constants.EstadoClimber;
 
-public class ClimberGSystem extends SubsystemBase {
-  public SparkMax ClimberGMotor = new SparkMax(Constants.ClimberGConstants.ClimberMotorsID, MotorType.kBrushless);
+public class SistemaClimber extends SubsystemBase {
+  public SparkMax MotorClimber = new SparkMax(Constants.ConstanteSistemaClimber.ClimberMotorsID, MotorType.kBrushless);
  
-  SparkMaxConfig configSparkMotor = new SparkMaxConfig();
+  SparkMaxConfig configuracaoMotorClimber = new SparkMaxConfig();
 
-  public ClimberGState currentState = ClimberGState.STOPPED;
+  public EstadoClimber currentState = EstadoClimber.PARADO;
 
-  public ClimberGSystem() {
-    configSparkMotor.inverted(true).idleMode(IdleMode.kBrake);
+  public SistemaClimber() {
+    configuracaoMotorClimber.inverted(true).idleMode(IdleMode.kBrake);
   
-    ClimberGMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-    ClimberGMotor.getEncoder().setPosition(0);
+    MotorClimber.configure(configuracaoMotorClimber, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    MotorClimber.getEncoder().setPosition(0); //Reiniciando o valor do climber
   }
 
   @Override
   public void periodic() {
 
-    if(currentState == ClimberGState.CLIMBING){
-      ClimberGMotor.set(currentState.speed);
-    }else if(currentState == ClimberGState.RECLIMBING) {
-      ClimberGMotor.set(currentState.speed);
+    if(currentState == EstadoClimber.CLIMBING){
+      MotorClimber.set(currentState.velocidade);
+    }else if(currentState == EstadoClimber.RECLIMBING) {
+      MotorClimber.set(currentState.velocidade);
     }else{
-      ClimberGMotor.set(ClimberGState.STOPPED.speed);
+      MotorClimber.set(EstadoClimber.PARADO.velocidade);
     }
 
     //if(currentState == ClimberGState.CLIMBING && EncoderClimber() < 30.0 ){
@@ -53,11 +53,11 @@ public class ClimberGSystem extends SubsystemBase {
     //} 
   }
   
-  public void SetCurrentState(ClimberGState state){
+  public void SetCurrentState(EstadoClimber state){
     this.currentState = state;
   }
 
-  public double EncoderClimber(){
-    return ClimberGMotor.getEncoder().getPosition();
+  public double ValorEncoderClimber(){
+    return MotorClimber.getEncoder().getPosition();
   }
 }

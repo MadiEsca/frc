@@ -11,33 +11,32 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.CoralState;
+import frc.robot.Constants.EstadoCoral;
 
-public class CoralScoreSystem extends SubsystemBase {
-  public SparkMax coralMotor = new SparkMax(Constants.ScoreCoralConstants.coralMotorID, MotorType.kBrushed);
+public class SistemaCoral extends SubsystemBase {
+  public SparkMax coralMotor = new SparkMax(Constants.ConstanteSistemaCoral.MotorCoralID, MotorType.kBrushed);
  
-  SparkMaxConfig configSparkMotor = new SparkMaxConfig();
+  SparkMaxConfig configCoralMotor = new SparkMaxConfig();
+  public EstadoCoral estadoAtual = EstadoCoral.PARADO;
 
-  public CoralState currentState = CoralState.STOPPED;
-
-  public CoralScoreSystem() {
-    configSparkMotor.inverted(true).idleMode(IdleMode.kBrake);
+  public SistemaCoral() {
+    configCoralMotor.inverted(true).idleMode(IdleMode.kBrake);
   
-    coralMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+    coralMotor.configure(configCoralMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
   } 
 
   @Override
   public void periodic() {
-    if(currentState == CoralState.SHOOTING){
-      coralMotor.set(currentState.speed);
+    if(estadoAtual == EstadoCoral.ATIVADO){
+      coralMotor.set(estadoAtual.velocidade);
     } else{
       coralMotor.set(-0.05);
     }
   }
 
-  public void SetCurrentState(CoralState state){
-    this.currentState = state;
+  public void SetCurrentState(EstadoCoral state){
+    this.estadoAtual = state;
   }
 
   public double EncoderCoral(){

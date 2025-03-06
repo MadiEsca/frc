@@ -1,25 +1,25 @@
 package frc.robot;
 
-import frc.robot.Constants.ClimberGState;
-import frc.robot.Constants.CoralState;
-import frc.robot.Constants.DriveTrainState;
+import frc.robot.Constants.EstadoClimber;
+import frc.robot.Constants.EstadoCoral;
+import frc.robot.Constants.EstadoTracao;
 //import frc.robot.Constants.OperatorConstants;
-import frc.robot.commands.DriveWithJoystick;
+import frc.robot.commands.TracaoControlada;
 
-import frc.robot.commands.Manipulator.SetMechanismState;
-import frc.robot.subsystems.DriveTrainSystem;
-import frc.robot.subsystems.CoralScoreSystem;
+import frc.robot.commands.Manipulator.DefinirEstadoMecanismo;
+import frc.robot.subsystems.SistemaTracao;
+import frc.robot.subsystems.SistemaCoral;
 import edu.wpi.first.wpilibj2.command.Subsystem;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.ClimberGSystem;
-import frc.robot.subsystems.DesceASystem;
-import frc.robot.Constants.DesceAState; 
+import frc.robot.subsystems.SistemaClimber;
+import frc.robot.subsystems.SistemaDescerAlga;
+import frc.robot.Constants.DescerAlgaEstado; 
 
 public class RobotContainer {
-  public static final DriveTrainSystem driveTrainSystem = new DriveTrainSystem();
-  public static final CoralScoreSystem coralScoreSystem = new CoralScoreSystem();
-  public static final ClimberGSystem ClimberGSystem = new ClimberGSystem();
-  public static final DesceASystem DesceASystem = new DesceASystem();
+  public static final SistemaTracao sistemaTracao = new SistemaTracao();
+  public static final SistemaCoral sistemaCoral = new SistemaCoral();
+  public static final SistemaClimber SistemaClimber = new SistemaClimber();
+  public static final SistemaDescerAlga SistemaDescerAlga = new SistemaDescerAlga();
 
 
   CommandXboxController joystick1 = new CommandXboxController(0);
@@ -32,20 +32,22 @@ public class RobotContainer {
 
   private void configureBindings() {
 
-    joystick1.button(1).whileTrue(new SetMechanismState(DriveTrainState.STOPPED));
-    joystick1.button(5).whileTrue(new SetMechanismState(DriveTrainState.MID));
-    joystick1.button(6).whileTrue(new SetMechanismState(DriveTrainState.FULL));
+    //Controle do driver da tração
+    joystick1.button(1).whileTrue(new DefinirEstadoMecanismo(EstadoTracao.PARADO));
+    joystick1.button(5).whileTrue(new DefinirEstadoMecanismo(EstadoTracao.MID));
+    joystick1.button(6).whileTrue(new DefinirEstadoMecanismo(EstadoTracao.FULL));
 
-    joystick1.rightTrigger().whileTrue(new SetMechanismState(CoralState.SHOOTING)).onFalse(new SetMechanismState(CoralState.STOPPED));
+    joystick1.rightTrigger().whileTrue(new DefinirEstadoMecanismo(EstadoCoral.ATIVADO)).onFalse(new DefinirEstadoMecanismo(EstadoCoral.PARADO));
     
-    joystick1.button(3).whileTrue(new SetMechanismState(ClimberGState.CLIMBING)).onFalse(new SetMechanismState(ClimberGState.STOPPED));
-    joystick1.button(2).whileTrue(new SetMechanismState(ClimberGState.RECLIMBING)).onFalse(new SetMechanismState(ClimberGState.STOPPED));
-    joystick2.button(3).whileTrue(new SetMechanismState(DesceAState.DESCE)).onFalse(new SetMechanismState(DesceAState.STOPPED));
-    joystick2.button(2).whileTrue(new SetMechanismState(DesceAState.REDESCE)).onFalse(new SetMechanismState(DesceAState.STOPPED));
+    //Controle do driver copiloto
+    joystick2.button(3).whileTrue(new DefinirEstadoMecanismo(EstadoClimber.CLIMBING)).onFalse(new DefinirEstadoMecanismo(EstadoClimber.PARADO));
+    joystick2.button(2).whileTrue(new DefinirEstadoMecanismo(EstadoClimber.RECLIMBING)).onFalse(new DefinirEstadoMecanismo(EstadoClimber.PARADO));
+    joystick2.button(3).whileTrue(new DefinirEstadoMecanismo(DescerAlgaEstado.DESCE)).onFalse(new DefinirEstadoMecanismo(DescerAlgaEstado.PARADO));
+    joystick2.button(2).whileTrue(new DefinirEstadoMecanismo(DescerAlgaEstado.SOBE)).onFalse(new DefinirEstadoMecanismo(DescerAlgaEstado.PARADO));
 
   }
 
   private void defaultcommands(){
-    driveTrainSystem.setDefaultCommand(new DriveWithJoystick(driveTrainSystem, joystick1));
+    sistemaTracao.setDefaultCommand(new TracaoControlada(sistemaTracao, joystick1));
   }
 }

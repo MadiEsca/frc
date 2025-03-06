@@ -11,39 +11,31 @@ import com.revrobotics.spark.SparkBase.ResetMode;
 import com.revrobotics.spark.SparkClosedLoopController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
-import frc.robot.Constants.AlgaPosition;
-import frc.robot.Constants.DesceAState;
+import frc.robot.Constants.DescerAlgaEstado;
 
-public class DesceASystem extends SubsystemBase {
-  public SparkMax DesceAMotor = new SparkMax(Constants.DesceAConstants.DesceAMotorsIDMotorsID, MotorType.kBrushless);
+public class SistemaDescerAlga extends SubsystemBase {
+  public SparkMax DesceAMotor = new SparkMax(Constants.ConstantesSistemaDescerAlga.DesceAMotorsIDMotorsID, MotorType.kBrushless);
  
   SparkMaxConfig configSparkMotor = new SparkMaxConfig();
 
-  public DesceAState currentState = DesceAState.STOPPED;
-  public AlgaPosition currentPosition = AlgaPosition.REPOUSO;
+  public DescerAlgaEstado estadoAtual = DescerAlgaEstado.PARADO;
 
-  public DesceASystem() {
-    configSparkMotor
-      .inverted(true)
-      .idleMode(IdleMode.kBrake);
+  public SistemaDescerAlga() {
+    configSparkMotor.inverted(true).idleMode(IdleMode.kBrake);
   
       DesceAMotor.configure(configSparkMotor, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
   } 
 
   @Override
   public void periodic() {
-    if(currentState == DesceAState.DESCE ||/*operador "OU" ||*/ currentState == DesceAState.REDESCE ){
-        DesceAMotor.set(currentState.speed);
+    if(estadoAtual == DescerAlgaEstado.DESCE ||/*operador "OU" ||*/ estadoAtual == DescerAlgaEstado.SOBE ){
+        DesceAMotor.set(estadoAtual.velocidade);
     } else{
         DesceAMotor.set(0);
     }
   }
 
-  public void SetCurrentState(DesceAState state){
-    this.currentState = state;
-  }
-
-  public void SetCurrentPosition(AlgaPosition altura){
-    this.currentPosition = altura;
+  public void SetCurrentState(DescerAlgaEstado estado){
+    this.estadoAtual = estado;
   }
 }
