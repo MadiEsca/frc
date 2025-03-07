@@ -17,6 +17,7 @@ public class SistemaCoral extends SubsystemBase {
   public SparkMax coralMotor = new SparkMax(Constants.ConstanteSistemaCoral.MotorCoralID, MotorType.kBrushed);
  
   SparkMaxConfig configCoralMotor = new SparkMaxConfig();
+  
   public EstadoCoral estadoAtual = EstadoCoral.PARADO;
 
   public SistemaCoral() {
@@ -35,7 +36,7 @@ public class SistemaCoral extends SubsystemBase {
     }
   }
 
-  public void SetCurrentState(EstadoCoral state){
+  public void DefinirEstadoMecanismo(EstadoCoral state){
     this.estadoAtual = state;
   }
 

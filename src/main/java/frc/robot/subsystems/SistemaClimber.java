@@ -18,13 +18,15 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.EstadoClimber;
+import frc.robot.Constants.EstadoDescerAlga;
 
 public class SistemaClimber extends SubsystemBase {
   public SparkMax MotorClimber = new SparkMax(Constants.ConstanteSistemaClimber.ClimberMotorsID, MotorType.kBrushless);
  
   SparkMaxConfig configuracaoMotorClimber = new SparkMaxConfig();
-
-  public EstadoClimber currentState = EstadoClimber.PARADO;
+  public EstadoClimber estadoAtual = EstadoClimber.PARADO;
+  
+  double velocidade = 0;
 
   public SistemaClimber() {
     configuracaoMotorClimber.inverted(true).idleMode(IdleMode.kBrake);
@@ -35,29 +37,19 @@ public class SistemaClimber extends SubsystemBase {
 
   @Override
   public void periodic() {
-
-    if(currentState == EstadoClimber.CLIMBING){
-      MotorClimber.set(currentState.velocidade);
-    }else if(currentState == EstadoClimber.RECLIMBING) {
-      MotorClimber.set(currentState.velocidade);
+    if(estadoAtual == EstadoClimber.CLIMBING){
+      MotorClimber.set(estadoAtual.velocidade);
+    }else if(estadoAtual == EstadoClimber.RECLIMBING) {
+      MotorClimber.set(estadoAtual.velocidade);
     }else{
       MotorClimber.set(EstadoClimber.PARADO.velocidade);
-    }
-
-    //if(currentState == ClimberGState.CLIMBING && EncoderClimber() < 30.0 ){
-    //  ClimberGMotor.set(currentState.speed);
-    //} else if(currentState == ClimberGState.RECLIMBING && EncoderClimber() >= 0) {
-    //  ClimberGMotor.set(currentState.speed);
-    //} else{
-    //  ClimberGMotor.set(ClimberGState.STOPPED.speed);
-    //} 
   }
-  
-  public void SetCurrentState(EstadoClimber state){
-    this.currentState = state;
   }
-
   public double ValorEncoderClimber(){
     return MotorClimber.getEncoder().getPosition();
+  }
+
+  public void DefinirEstadoMecanismo(EstadoClimber estado){
+    this.estadoAtual = estado;
   }
 }

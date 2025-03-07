@@ -7,58 +7,71 @@ import frc.robot.Constants.EstadoClimber;
 import frc.robot.Constants.EstadoCoral;
 import frc.robot.Constants.ConstantesTracao;
 import frc.robot.Constants.EstadoTracao;
-import frc.robot.Constants.DescerAlgaEstado;
-import frc.robot.Constants.ConstantesSistemaDescerAlga;
+import frc.robot.Constants.EstadoDescerAlga;
+import frc.robot.Constants.EstadoPuxarAlga;
+import frc.robot.Constants.*;
 
 public class DefinirEstadoMecanismo extends InstantCommand {
   
     @SuppressWarnings({"PMD.UnusedPrivateField", "PMD.SingularField"})
   
-      private EstadoCoral currentStateCoral = EstadoCoral.PARADO;
-      private EstadoTracao currentStateDriveTrain = EstadoTracao.PARADO;
-      private EstadoClimber currentStateClimberG = EstadoClimber.PARADO;
-      private DescerAlgaEstado currentStateDesceA = DescerAlgaEstado.PARADO;
-
+    private EstadoCoral estadoAtualCoral = EstadoCoral.PARADO;
+    private EstadoTracao estadoAtualTracao = EstadoTracao.PARADO;
+    private EstadoClimber estadoAtualClimber = EstadoClimber.PARADO;
+    private EstadoDescerAlga estadoAtualDescerAlga = EstadoDescerAlga.PARADO;
+    private EstadoPuxarAlga estadoAtualPuxarAlga = EstadoPuxarAlga.PARADO;
+    
+    //Métodos Enuns
     boolean currentStateCoralOnly = false;
     boolean currentStateDriveTrainOnly = false;
     boolean currentStateClimberGOnly = false;
     boolean currentStateDesceAOnly = false;
     boolean currentPosition = false;
 
+    double velocidadeAtualAlga = 0;
+
     public DefinirEstadoMecanismo(EstadoCoral estado) {
-      this.currentStateCoral = estado;
+      this.estadoAtualCoral = estado;
       addRequirements(RobotContainer.sistemaCoral);
       currentStateCoralOnly = true;
     }
 
     public DefinirEstadoMecanismo(EstadoTracao estado) {
-      this.currentStateDriveTrain = estado;
+      this.estadoAtualTracao = estado;
       addRequirements(RobotContainer.sistemaTracao);
       currentStateDriveTrainOnly = true;
     }
 
     public DefinirEstadoMecanismo(EstadoClimber estado) {
-      this.currentStateClimberG = estado;
+      this.estadoAtualClimber = estado;
       addRequirements(RobotContainer.SistemaClimber);
       currentStateClimberGOnly = true;
     }
     
-    public DefinirEstadoMecanismo(DescerAlgaEstado estado) {
-      this.currentStateDesceA = estado;
+    public DefinirEstadoMecanismo(EstadoDescerAlga estado) {
+      this.estadoAtualDescerAlga = estado;
       addRequirements(RobotContainer.SistemaDescerAlga);
       currentStateDesceAOnly = true;
+    }
+
+    public DefinirEstadoMecanismo(EstadoPuxarAlga estado){
+      this.velocidadeAtualAlga = estado.velocidade;
     }
 
     @Override
   public void initialize() {
     if(currentStateCoralOnly) {
-      RobotContainer.sistemaCoral.SetCurrentState(this.currentStateCoral);
+      RobotContainer.sistemaCoral.DefinirEstadoMecanismo(this.estadoAtualCoral);
     } else if(currentStateDriveTrainOnly){
-      RobotContainer.sistemaTracao.SetCurrentState(this.currentStateDriveTrain);
+      RobotContainer.sistemaTracao.DefinirEstadoMecanismo(this.estadoAtualTracao);
     }else if(currentStateClimberGOnly){
-      RobotContainer.SistemaClimber.SetCurrentState(this.currentStateClimberG);
+      RobotContainer.SistemaClimber.DefinirEstadoMecanismo(this.estadoAtualClimber);
+    
+    
     }else if(currentStateDesceAOnly){
-      RobotContainer.SistemaDescerAlga.SetCurrentState(this.currentStateDesceA);
+      RobotContainer.SistemaDescerAlga.DefinirEstadoMecanismo(this.estadoAtualDescerAlga);
+    }else if(currentStateDesceAOnly){
+      RobotContainer.SistemaPuxarAlga.DefinirEstadoMecanismo(this.estadoAtualPuxarAlga);
     }
-  } 
+  }
 }
